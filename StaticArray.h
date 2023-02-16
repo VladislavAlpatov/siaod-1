@@ -15,10 +15,10 @@ class StaticArray : public IArray<Type>
 public:
     void insert(const size_t &index, const Type &val) override
     {
-        if (index < 0 or index >= iSize)
-            throw "Invalid index";
+        if (index < 0 or index >= iSize or index >= m_UsedSize)
+            throw "Segfault";
 
-        if (m_UsedSize+1 >= iSize)
+        if (m_UsedSize >= iSize)
             throw "Buffer overflow";
 
         for (size_t i = m_UsedSize; i >= index+1; i--)
@@ -63,7 +63,7 @@ public:
     }
     Type& operator[](const size_t& index) override
     {
-        if (index >= m_UsedSize)
+        if (index >= m_UsedSize or index < 0)
             throw "Segfault";
 
         return m_data[index];

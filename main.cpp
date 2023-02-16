@@ -41,7 +41,6 @@ void Payload(std::unique_ptr<IArray<int>>& pArr)
                                  return tmp.front() == tmp.back();
                              }));
 
-
     pArr->remove_if([](const int& num){return !(num % 5);});
 
     PrintArray(pArr);
