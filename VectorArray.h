@@ -21,8 +21,7 @@ public:
     {
         for (size_t i = 0; i < this->size(); i++)
             if (check(this->at(i)))
-                this->erase(this->begin()+i);
-
+                this->erase(this->begin()+ (i--));
     }
 
     void push_back(const Type &val) override

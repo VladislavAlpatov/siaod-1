@@ -41,7 +41,7 @@ public:
     {
         for (size_t i = 0; i < GetSize(); ++i)
             if (check(m_pData[i]))
-                remove(i);
+                remove(i--);
     }
 
     size_t find_last(bool (*check)(const Type &)) override

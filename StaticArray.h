@@ -42,7 +42,7 @@ public:
     {
         for (size_t i = 0; i < GetSize(); ++i)
             if (check(m_data[i]))
-                remove(i);
+                remove(i--);
 
     }
     void remove(const size_t& index)
