@@ -15,26 +15,19 @@ class DynamicArray : public IArray<Type>
 public:
     ~DynamicArray() override
     {
-        delete[] m_pData;
+        free(m_pData);
     }
 
     void insert(const size_t &index, const Type &val) override
     {
         if (index >= m_iSize or index < 0)
             throw "Segfault";
-        auto* newBuff = new Type[m_iSize+1];
-        size_t iter = 0;
+        m_pData = (Type*) realloc(m_pData, (m_iSize+1)*sizeof(Type));
 
-        for (size_t i = 0; i < m_iSize+1; i++)
-            if (i != index)
-                newBuff[i] = m_pData[iter++];
+        for (int i = m_iSize-1; i < index; --i)
+            std::swap(m_pData[i], m_pData[i-1]);
 
-
-        newBuff[index] = val;
-        delete m_pData;
-
-        m_pData = newBuff;
-        m_iSize++;
+        m_pData[index] = val;
     }
 
     void remove_if(bool (*check)(const Type &)) override
@@ -53,16 +46,8 @@ public:
     }
     void push_back(const Type &val) override
     {
-        auto* newBuf = new Type[m_iSize+1];
-
-        for(int i = 0; i < m_iSize; i++)
-            newBuf[i] = std::move(m_pData[i]);
-
-        newBuf[m_iSize] = val;
-        delete[] m_pData;
-
-        m_pData = newBuf;
-        m_iSize++;
+        m_pData = (Type*) ( (m_pData) ? realloc(m_pData, (m_iSize+1)*sizeof(Type) ) : malloc(sizeof(Type))) ;
+        m_pData[m_iSize++] = val;
     }
     size_t GetSize() const override {return m_iSize;}
     void remove(const size_t& index)
@@ -70,18 +55,11 @@ public:
         if (index < 0 or index >= m_iSize)
             throw "Segfault";
 
-        auto* newBuf = new Type[m_iSize-1];
-        size_t iter = 0;
+        for (int i = index; i < m_iSize-1; ++i)
+            std::swap(m_pData[i], m_pData[i+1]);
 
-        for (size_t i = 0; i < m_iSize; ++i)
-            if (i != index)
-            {
-                newBuf[iter] =m_pData[i];
-                iter++;
-            }
-        delete[] m_pData;
-        m_pData = newBuf;
-        m_iSize--;
+        m_pData = (int*)realloc(m_pData, (--m_iSize)*sizeof(Type));
+
     }
 
     Type& operator[](const size_t& index) override

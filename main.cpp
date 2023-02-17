@@ -83,7 +83,7 @@ void AutomaticArraySet(std::unique_ptr<IArray<int>>& pArr)
     std::mt19937 rng(rd());
     std::uniform_int_distribution<int> uni(-1000,1000);
 
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < 10; i++)
         pArr->push_back(uni(rng));
 }
 
