@@ -22,10 +22,10 @@ public:
     {
         if (index >= m_iSize or index < 0)
             throw "Segfault";
-        m_pData = (Type*) realloc(m_pData, (m_iSize+1)*sizeof(Type));
+        m_pData = (Type*) realloc(m_pData, (++m_iSize)*sizeof(Type));
 
-        for (int i = m_iSize-1; i < index; --i)
-            std::swap(m_pData[i], m_pData[i-1]);
+        for (int i = m_iSize-1; i > index; --i)
+            m_pData[i] =  std::move(m_pData[i-1]);
 
         m_pData[index] = val;
     }
@@ -56,7 +56,7 @@ public:
             throw "Segfault";
 
         for (int i = index; i < m_iSize-1; ++i)
-            std::swap(m_pData[i], m_pData[i+1]);
+            m_pData[i] = std::move(m_pData[i+1]);
 
         m_pData = (int*)realloc(m_pData, (--m_iSize)*sizeof(Type));
 
