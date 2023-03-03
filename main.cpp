@@ -20,30 +20,43 @@ void Payload(std::unique_ptr<IArray<int>>& pArr)
     size_t index = 0;
     int     val;
 
-    PrintArray(pArr);
+    while (true)
+    {
+        int mode = 0;
+        printf("1 - Insert\n2 -Find magic number \n3 - remove element if (num % 5)\n4 - Print array\n Choose operation: ");
+        std::cin >> mode;
 
-    printf("\nEnter index insert to: ");
-    std::cin >> index;
+        switch (mode)
+        {
+            case 1:
+                printf("\nEnter index insert to: ");
+                std::cin >> index;
 
-    printf("Enter value: ");
-    std::cin >> val;
+                printf("Enter value: ");
+                std::cin >> val;
 
-    pArr->insert(index, val);
+                pArr->insert(index, val);
+                break;
+            case 2:
+                printf("Index of last suitable number: %zu\n", pArr->find_last([](const int& num) ->bool
+                                                                               {
+                                                                                   if (abs(num) < 10)
+                                                                                       return false;
+                                                                                   auto tmp =  std::to_string(abs(num));
 
-    PrintArray(pArr);
-
-    printf("Index of last suitable number: %zu\n", pArr->find_last([](const int& num) ->bool
-                             {
-                                 if (abs(num) < 10)
-                                     return false;
-                                 auto tmp =  std::to_string(abs(num));
-
-                                 return tmp.front() == tmp.back();
-                             }));
-
-    pArr->remove_if([](const int& num){return !(num % 5);});
-
-    PrintArray(pArr);
+                                                                                   return tmp.front() == tmp.back();
+                                                                               }));
+                break;
+            case 3:
+                pArr->remove_if([](const int& num){return !(num % 5);});
+                break;
+            case 4:
+                PrintArray(pArr);
+                break;
+            default:
+                return;
+        }
+    }
 }
 
 std::unique_ptr<IArray<int>> MakeArrayByMode(const int mode)
@@ -83,7 +96,7 @@ void AutomaticArraySet(std::unique_ptr<IArray<int>>& pArr)
     std::mt19937 rng(rd());
     std::uniform_int_distribution<int> uni(-1000,1000);
 
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < 10; i++)
         pArr->push_back(uni(rng));
 }
 
