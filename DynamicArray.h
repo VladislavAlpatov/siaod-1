@@ -7,58 +7,47 @@
 #include <cstddef>
 #include "IArray.h"
 #include <algorithm>
-#include <memory>
 
 
 template<typename Type>
 class DynamicArray : public IArray<Type>
 {
 public:
+    ~DynamicArray() override
+    {
+        free(m_pData);
+    }
 
     void insert(const size_t &index, const Type &val) override
     {
         if (index >= m_iSize or index < 0)
             throw "Segfault";
+        m_pData = (Type*) realloc(m_pData, (m_iSize+1)*sizeof(Type));
 
-        auto newBuff = std::unique_ptr<Type>(new Type[m_iSize+1]);
-        size_t iter = 0;
+        for (int i = m_iSize-1; i < index; --i)
+            std::swap(m_pData[i], m_pData[i-1]);
 
-        for (size_t i = 0; i < m_iSize+1; i++)
-            if (i != index)
-                newBuff.get()[i] = m_pData.get()[iter++];
-
-
-        newBuff.get()[index] = val;
-
-        m_pData = std::move(newBuff);
-        m_iSize++;
+        m_pData[index] = val;
     }
 
     void remove_if(bool (*check)(const Type &)) override
     {
         for (size_t i = 0; i < GetSize(); ++i)
-            if (check(m_pData.get()[i]))
+            if (check(m_pData[i]))
                 remove(i--);
     }
 
     size_t find_last(bool (*check)(const Type &)) override
     {
         for (int i = GetSize()-1; i >= 0; i--)
-            if (check(m_pData.get()[i]))
+            if (check(m_pData[i]))
                 return i;
         throw "NotFound";
     }
     void push_back(const Type &val) override
     {
-        auto newBuff = std::unique_ptr<Type>(new Type[m_iSize+1]);
-
-        for(int i = 0; i < m_iSize; i++)
-            newBuff.get()[i] = std::move(m_pData.get()[i]);
-
-        newBuff.get()[m_iSize] = val;
-
-        m_pData = std::move(newBuff);
-        m_iSize++;
+        m_pData = (Type*) ( (m_pData) ? realloc(m_pData, (m_iSize+1)*sizeof(Type) ) : malloc(sizeof(Type))) ;
+        m_pData[m_iSize++] = val;
     }
     size_t GetSize() const override {return m_iSize;}
     void remove(const size_t& index)
@@ -66,17 +55,11 @@ public:
         if (index < 0 or index >= m_iSize)
             throw "Segfault";
 
-        auto newBuff = std::unique_ptr<Type>(new Type[m_iSize-1]);
-        size_t iter = 0;
+        for (int i = index; i < m_iSize-1; ++i)
+            std::swap(m_pData[i], m_pData[i+1]);
 
-        for (size_t i = 0; i < m_iSize; ++i)
-            if (i != index)
-            {
-                newBuff.get()[iter] = std::move(m_pData.get()[i]);
-                iter++;
-            }
-        m_pData = std::move(newBuff);
-        m_iSize--;
+        m_pData = (int*)realloc(m_pData, (--m_iSize)*sizeof(Type));
+
     }
 
     Type& operator[](const size_t& index) override
@@ -84,10 +67,10 @@ public:
         if (index >= m_iSize)
             throw "Segfault";
 
-        return m_pData.get()[index];
+        return m_pData[index];
     }
 
 private:
-    std::unique_ptr<Type> m_pData = nullptr;
+    Type* m_pData = nullptr;
     int m_iSize = 0;
 };
