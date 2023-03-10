@@ -23,21 +23,19 @@ int main()
     std::vector<int> parsedNumbers;
     std::string  text;
 
-
     while (true)
     {
         printf("Enter text: ");
         std::getline(std::cin, text);
-        int iMode;
-        printf("Enter mode: ");
-        std::cin >> iMode;
-        for (const auto& subStr : (iMode == 0) ? Split(text) : Split(text.c_str()))
-            parsedNumbers.push_back(ParseNumber(subStr));
+
+        for (const auto& subStr : Split(text))
+            parsedNumbers.push_back(ParseNumber(subStr.c_str()));
 
         for (const auto& number : parsedNumbers)
             printf("%d ", number);
 
         printf("\n");
+        text.clear();
     }
 
 }

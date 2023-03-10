@@ -5,4 +5,4 @@
 #include <string>
 
 
-int ParseNumber(const std::string& str);
+int ParseNumber(const char* str);
