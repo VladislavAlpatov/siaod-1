@@ -23,6 +23,7 @@ int main()
     std::vector<int> parsedNumbers;
     std::string  text;
 
+
     while (true)
     {
         printf("Enter text: ");
