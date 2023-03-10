@@ -27,8 +27,10 @@ int main()
     {
         printf("Enter text: ");
         std::getline(std::cin, text);
-
-        for (const auto& subStr : Split(text))
+        int iMode;
+        printf("Enter mode: ");
+        std::cin >> iMode;
+        for (const auto& subStr : (iMode == 0) ? Split(text) : Split(text.c_str()))
             parsedNumbers.push_back(ParseNumber(subStr));
 
         for (const auto& number : parsedNumbers)
