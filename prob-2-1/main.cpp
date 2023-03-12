@@ -81,12 +81,16 @@ int main() {
                         break;
                     }
                 if (bValid)
+                {
+                    printf("");
                     res.emplace_back(center, center.distance(points1[i]));
+                }
+
             }
 
     std::sort(res.begin(), res.end(),
-              [](const std::pair<Vec2, float>& first , const std::pair<Vec2, float>& second) {return first.second > second.second;});
+              [](const std::pair<Vec2, float>& first , const std::pair<Vec2, float>& second) {return first.second < second.second;});
 
-    printf("Max area %f\n",res.front().second);
+    printf("min area %f\n",res.front().second);
     return 0;
 }

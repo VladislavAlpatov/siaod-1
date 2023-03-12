@@ -42,6 +42,8 @@ public:
         for (int i = GetSize()-1; i >= 0; i--)
             if (check(m_pData[i]))
                 return i;
+
+
         throw "NotFound";
     }
     void push_back(const Type &val) override
