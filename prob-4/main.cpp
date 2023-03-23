@@ -6,11 +6,14 @@
 #include <string>
 #include "ExamTable.h"
 
+struct A
+{
+    char* x;
+};
+
 int main()
 {
-    Table tbl;
+    auto table = (A*)malloc(sizeof(A)*5);
+    table[0] = A();
 
-    tbl.information = (Airoport*) malloc(2 * sizeof(Airoport));
-
-    tbl.information[0] = std::move(Airoport());
 }

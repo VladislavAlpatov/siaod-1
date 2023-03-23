@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" remoteFilesAllowedToDisappearOnAutoupload="false">
+    <serverData>
+      <paths name="remote-linux-system (00ae2675-9e2e-426a-8569-43d3835de501)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/tmp/siaod-1" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>
