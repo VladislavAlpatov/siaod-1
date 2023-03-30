@@ -4,6 +4,7 @@
 
 #include "StaticMatrix.h"
 #include <stdexcept>
+
  float &StaticMatrix::At(int iRow, int iColumn)
 {
     return m_pData[iRow][iColumn];

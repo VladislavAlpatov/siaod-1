@@ -2,7 +2,7 @@
 <project version="4">
   <component name="PublishConfigData" remoteFilesAllowedToDisappearOnAutoupload="false">
     <serverData>
-      <paths name="remote-linux-system (00ae2675-9e2e-426a-8569-43d3835de501)">
+      <paths name="remote-linux-system (a8d661a9-a134-4486-9a1e-f17ea5e2a903)">
         <serverdata>
           <mappings>
             <mapping deploy="/tmp/siaod-1" local="$PROJECT_DIR$" />

@@ -7,16 +7,6 @@
 #include <iostream>
 
 
-int IBaseMatrix::GetRowsCount() const
-{
-    return m_iRows;
-}
-
-int IBaseMatrix::GetColumnCount() const
-{
-    return m_iColumns;
-}
-
 bool IBaseMatrix::IsEqualSize(const IBaseMatrix &other) const
 {
     return m_iColumns == other.m_iColumns and m_iRows == other.m_iRows;
@@ -64,6 +54,4 @@ void IBaseMatrix::Print()
         }
         printf("\n");
     }
-
-
 }

@@ -3,6 +3,7 @@
 //
 
 #pragma once
+#include <cmath>
 
 class Vec2
 {
@@ -25,18 +26,10 @@ public:
 
         return vec;
     }
-    float cross(const Vec2& vec)
-    {
-        return x * vec.y - y * vec.x;
-    }
     float distance(const Vec2& other)
     {
         auto delta = *this - other;
         return sqrt(delta.x*delta.x+ delta.y*delta.y);
-    }
-    float length() const
-    {
-        return sqrt(x*x+y*y);
     }
     float x;
     float y;
