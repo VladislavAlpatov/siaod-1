@@ -20,6 +20,10 @@ public:
         for (size_t i = 0; i < sizeof...(args); i++)
             PushBack(std::move(tmp[i]));
     }
+    LinkedList()
+    {
+
+    }
     void PushBack(Type val)
     {
         auto pNewNode = new Node(val);
@@ -43,18 +47,8 @@ public:
     }
     void Clip(size_t szBegin, size_t szEnd)
     {
-        auto pStart = GetNodeByIndex(szBegin-1);
-        auto pEnd   = GetNodeByIndex(szEnd+1);
-
-        for (auto it = pStart->m_pNext; it != pEnd;)
-        {
-            const auto pNext = it->m_pNext;
-            delete it;
-
-            it = pNext;
-            m_szSize--;
-        }
-        pStart->m_pNext = pEnd;
+        for (int i = 0; i < szEnd;i++)
+            Remove(szBegin);
 
     }
     Node* GetNodeByIndex(size_t szIndex)
@@ -65,6 +59,13 @@ public:
             pCurrent = pCurrent->m_pNext;
 
         return pCurrent;
+    }
+    bool Contains(Type val)
+    {
+        for (auto it = m_pStartNode; it; it = it->m_pNext)
+            if (it->m_data == val)
+                return true;
+        return false;
     }
     void Sort()
     {
@@ -78,6 +79,37 @@ public:
                     std::swap(a, b);
             }
 
+    }
+    void Remove(size_t index)
+    {
+        auto pNodeOnRemove = GetNodeByIndex(index);
+        m_szSize--;
+        if (pNodeOnRemove == m_pStartNode and pNodeOnRemove == m_pEndNode)
+        {
+            delete pNodeOnRemove;
+            m_pStartNode = nullptr;
+            m_pEndNode = nullptr;
+            return;
+        }
+
+        if (pNodeOnRemove == m_pEndNode)
+        {
+            auto pPrev = GetNodeByIndex(index-1);
+            pPrev->m_pNext = nullptr;
+            m_pEndNode = pPrev;
+            delete pNodeOnRemove;
+            return;
+        }
+        if (pNodeOnRemove == m_pStartNode)
+        {
+            m_pStartNode = pNodeOnRemove->m_pNext;
+            delete pNodeOnRemove;
+            return;
+        }
+
+        auto pPrev= GetNodeByIndex(index-1);
+        pPrev->m_pNext = pNodeOnRemove->m_pNext;
+        delete pNodeOnRemove;
     }
 private:
     size_t m_szSize = 0;
