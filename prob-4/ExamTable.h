@@ -4,6 +4,8 @@
 
 #pragma once
 #include <string>
+#include "DynamicArray.h"
+#include <iostream>
 
 
 enum ExamScore : int
@@ -16,24 +18,22 @@ enum ExamScore : int
 };
 struct ExamNode
 {
-public:
-    ExamNode(int iExamScore, const std::string& sStudentLastName, const std::string&sStudentInitials, int iCreditBookId, const std::string&sExamDate)
-    {
-        m_iExamScore = iExamScore;
-        m_sStudentLastName = sStudentLastName;
-        m_sStudentInitials = sStudentInitials;
-        m_iCreditBookId = iCreditBookId;
-        m_sExamDateStamp = sExamDate;
-    }
     ExamNode() = default;
     int m_iExamScore;
-    std::string m_sStudentLastName;
-    std::string m_sStudentInitials;
+    char m_sStudentLastName[64];
+    char  m_sStudentInitials[64];
     int m_iCreditBookId;
-    std::string m_sExamDateStamp;
+    char m_sExamDateStamp[64];
 };
 
-class ExamTable
+struct ExamTable
 {
+    int m_iInstituteCode;
+    int m_iTopicCode;
+    char m_sTeacherName[64]= {};
+    char m_sTeacherInitials[4]= {};
+    DynamicArray<ExamNode> data;
 
+    void AddFromUser();
+    void Print();
 };
