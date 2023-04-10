@@ -25,7 +25,7 @@ int main()
 
     while (true)
     {
-        printf("Enter text: ");
+        printf("Enter text:");
         std::getline(std::cin, text);
 
         for (const auto& subStr : Split(text))
@@ -36,6 +36,7 @@ int main()
 
         printf("\n");
         text.clear();
+		parsedNumbers.clear();
     }
 
 }

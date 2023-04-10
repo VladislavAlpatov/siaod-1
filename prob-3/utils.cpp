@@ -11,8 +11,9 @@ int ParseNumber(const char* str)
     int numberSize = strlen(str);
 
     for (int i = numberSize-1; i >= 0; --i)
-        outNumber += (str[i]-'0') * (int)pow(10, numberSize-i-1);
+		if (str[i] != '-')
+        	outNumber += (str[i]-'0') * (int)pow(10, numberSize-i-1);
 
 
-    return outNumber;
+    return (str[0] == '-') ? -outNumber: outNumber;
 }
