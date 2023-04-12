@@ -25,7 +25,10 @@ void ExamTable::AddFromUser()
 
 	int iBiggerNodeIndex = data.find_bigger_element(newNode, [](const ExamNode& first,const ExamNode& second) -> bool {return first.m_iCreditBookId > second.m_iCreditBookId;});
 
-	(iBiggerNodeIndex == -1) ? data.push_back(newNode) : data.insert(iBiggerNodeIndex, newNode);
+	if (iBiggerNodeIndex == -1)
+		data.push_back(newNode);
+	else
+		data.insert(iBiggerNodeIndex, newNode);
 }
 
 void ExamTable::Print()

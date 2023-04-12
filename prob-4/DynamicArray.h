@@ -18,11 +18,9 @@ public:
 		if (index >= m_iSize) throw "Segfault";
 
 		m_pData = (Type*) realloc(m_pData, (m_iSize+1)*sizeof(Type));
-
-		for (int i = m_iSize-1; i < index; --i)
+		m_pData[m_iSize++] = val;
+		for (int i = m_iSize-1; i > index; --i)
 			std::swap(m_pData[i], m_pData[i-1]);
-
-		m_pData[index] = val;
 	}
 
 	void remove_if(bool (*check)(const Type &))
