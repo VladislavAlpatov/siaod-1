@@ -22,7 +22,10 @@ void ExamTable::AddFromUser()
     printf("Enter exam timestamp: ");
     std::cin >> newNode.m_sExamDateStamp;
 
-    data.push_back(newNode);
+
+	int iBiggerNodeIndex = data.find_bigger_element(newNode, [](const ExamNode& first,const ExamNode& second) -> bool {return first.m_iCreditBookId > second.m_iCreditBookId;});
+
+	(iBiggerNodeIndex == -1) ? data.push_back(newNode) : data.insert(iBiggerNodeIndex, newNode);
 }
 
 void ExamTable::Print()
