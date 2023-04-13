@@ -41,7 +41,7 @@ int main()
 
                     printf("New initials: ");
                     memset(student.m_sStudentInitials, 0, 64);
-                    std::cin >> student.m_sStudentLastName;
+                    std::cin >> student.m_sStudentInitials;
 
                     printf("New score: ");
                     std::cin >> student.m_iExamScore;
