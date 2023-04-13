@@ -20,10 +20,8 @@ public:
         for (size_t i = 0; i < sizeof...(args); i++)
             PushBack(std::move(tmp[i]));
     }
-    LinkedList()
-    {
-
-    }
+    LinkedList() = default;
+	~LinkedList() {Clip(0, m_szSize);}
     void PushBack(Type val)
     {
         auto pNewNode = new Node(val);
