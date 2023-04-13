@@ -6,19 +6,19 @@
 #include "LinkedList.h"
 
 
-bool isBalanced(LinkedList<char>& s, int index = 0, int open = 0)
+bool IsBalanced(LinkedList<char>& s, int index = 0, int open = 0)
 {
     if (index == s.Size())
         return open == 0;
 
     if (s.At(index) == '(')
-        return isBalanced(s, index + 1, open + 1);
+        return IsBalanced(s, index + 1, open + 1);
 
     if (s.At(index) != ')')
-        return isBalanced(s, index + 1, open);
+        return IsBalanced(s, index + 1, open);
 
     if (open > 0)
-        return isBalanced(s, index + 1, open - 1);
+        return IsBalanced(s, index + 1, open - 1);
 
     return false;
 }
@@ -70,7 +70,7 @@ int main()
 			for (auto chr : exrp)
 				tmp.PushBack(chr);
 
-			(isBalanced(tmp)) ? printf("Expression is balanced\n") : printf("Expression is not balanced\n");
+			(IsBalanced(tmp)) ? printf("Expression is balanced\n") : printf("Expression is not balanced\n");
 			continue;
 		}
 		int val = 0;
