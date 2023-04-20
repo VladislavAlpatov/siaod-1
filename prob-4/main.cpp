@@ -18,7 +18,7 @@ int main()
 
     while (true)
     {
-        printf("0 - Add new student\n1 - Edit Student\n2 - Count not visited\n3 - Remove not allowed\n4 - Print tabel\nChoose operation: ");
+        printf("0 - Add new student\n1 - Edit Student\n2 - Count not visited\n3 - remove not allowed\n4 - Print tabel\nChoose operation: ");
         int iOperation;
         std::cin >> iOperation;
         if (iOperation == 0)

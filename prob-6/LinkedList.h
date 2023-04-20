@@ -46,7 +46,7 @@ public:
     void Clip(size_t szBegin, size_t szEnd)
     {
         for (int i = 0; i < szEnd;i++)
-            Remove(szBegin);
+            remove(szBegin);
 
     }
     Node* GetNodeByIndex(size_t szIndex)
@@ -80,7 +80,7 @@ public:
             }
 
     }
-    void Remove(size_t index)
+    void remove(size_t index)
     {
         auto pNodeOnRemove = GetNodeByIndex(index);
         m_szSize--;

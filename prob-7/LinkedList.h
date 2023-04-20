@@ -18,11 +18,11 @@ public:
         Type tmp[] = {args...};
 
         for (size_t i = 0; i < sizeof...(args); i++)
-            PushBack(std::move(tmp[i]));
+			push_back(std::move(tmp[i]));
     }
     LinkedList() = default;
 	~LinkedList() {Clip(0, m_szSize);}
-    void PushBack(Type val)
+    void push_back(Type val)
     {
         auto pNewNode = new Node(val);
         m_szSize++;
@@ -35,18 +35,18 @@ public:
         m_pEndNode->m_pNext = pNewNode;
         m_pEndNode = pNewNode;
     }
-    size_t Size() const
+    size_t GetSize() const
     {
         return m_szSize;
     }
-    Type& At(size_t szIndex)
+    Type& operator[](size_t szIndex)
     {
         return GetNodeByIndex(szIndex)->m_data;
     }
     void Clip(size_t szBegin, size_t szEnd)
     {
         for (int i = 0; i < szEnd;i++)
-            remove(szBegin);
+			remove(szBegin);
 
     }
     Node* GetNodeByIndex(size_t szIndex)
@@ -59,26 +59,6 @@ public:
 		}
 
         return pCurrent;
-    }
-    bool Contains(Type val)
-    {
-        for (auto it = m_pStartNode; it; it = it->m_pNext)
-            if (it->m_data == val)
-                return true;
-        return false;
-    }
-    void Sort()
-    {
-        for (size_t i = 0; i < m_szSize - 1 ; ++i)
-            for (size_t j =0; j < m_szSize - i - 1; ++j)
-            {
-                auto& a = At(j);
-                auto& b = At(j+1);
-
-                if (a > b)
-                    std::swap(a, b);
-            }
-
     }
     void remove(size_t index)
     {

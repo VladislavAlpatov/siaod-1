@@ -48,10 +48,6 @@ public:
 
         m_UsedSize--;
     }
-	void pop()
-	{
-		remove(GetSize()-1);
-	}
     size_t GetSize() const
     {
         return m_UsedSize;
