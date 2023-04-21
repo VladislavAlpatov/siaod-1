@@ -10,7 +10,6 @@
 template<typename Type, int iSize>
 class StaticArray
 {
-
 public:
     void insert(const size_t &index, const Type &val)
     {
