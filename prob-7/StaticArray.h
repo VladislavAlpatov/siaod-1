@@ -26,6 +26,11 @@ public:
         m_UsedSize++;
         m_data[index] = val;
     }
+	void clear()
+	{
+		for (size_t i = 0 ; i <GetSize(); i++)
+			remove(0);
+	}
 
     void push_back(const Type& val)
     {

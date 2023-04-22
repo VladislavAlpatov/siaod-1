@@ -11,6 +11,7 @@ public:
 	virtual ValType Pop() = 0;
 	virtual ValType& GetTop() = 0;
 	virtual bool IsEmpty() const = 0;
+	virtual void Clear() = 0;
 };
 
 
@@ -29,6 +30,10 @@ public:
 		m_data.remove(m_data.GetSize()-1);
 
 		return val;
+	}
+	void Clear() override
+	{
+		m_data.clear();
 	}
 
 	ValType& GetTop() override

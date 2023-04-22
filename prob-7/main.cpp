@@ -54,6 +54,7 @@ void Payload()
 		PRINT_TOP,
 		POP,
 		CHECK,
+		CLEAR,
 	};
 
 
@@ -61,7 +62,7 @@ void Payload()
 	{
 		int iOperation = 0;
 
-		printf("0 - Push\n1 - Print top element\n2 - Pop element\n3 - Check if stack empty\nChoose operation: ");
+		printf("0 - Push\n1 - Print top element\n2 - Pop element\n3 - Check if stack empty\n4 - Clear stack\nChoose operation: ");
 		std::cin >> iOperation;
 
 
@@ -80,6 +81,8 @@ void Payload()
 			(stack->IsEmpty()) ? printf("Stack is empty\n") : printf("Stack is not empty\n");
 		else if (iOperation == PRINT_TOP)
 			printf("Top value is: %d\n", stack->GetTop());
+		else if (iOperation == CLEAR)
+			stack->Clear();
 
 	}
 }

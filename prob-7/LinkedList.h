@@ -60,6 +60,11 @@ public:
 
         return pCurrent;
     }
+	void clear()
+	{
+		for (size_t i = 0 ; i <GetSize(); i++)
+			remove(0);
+	}
     void remove(size_t index)
     {
         auto pNodeOnRemove = GetNodeByIndex(index);
