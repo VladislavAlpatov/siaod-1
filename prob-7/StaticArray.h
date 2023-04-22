@@ -28,7 +28,8 @@ public:
     }
 	void clear()
 	{
-		for (size_t i = 0 ; i <GetSize(); i++)
+		size_t len = GetSize();
+		for (size_t i = 0 ; i < len; i++)
 			remove(0);
 	}
 

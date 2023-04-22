@@ -62,8 +62,7 @@ public:
     }
 	void clear()
 	{
-		for (size_t i = 0 ; i <GetSize(); i++)
-			remove(0);
+		Clip(0, m_szSize);
 	}
     void remove(size_t index)
     {
