@@ -7,7 +7,7 @@
 
 
 template<class Type>
-void BubbleSort(Type& vec)
+Type BubbleSort(Type vec, size_t& szCompareCount, size_t& szMoveCount)
 {
 	bool bSwapped = true;
 
@@ -19,42 +19,115 @@ void BubbleSort(Type& vec)
 	{
 		bSwapped = false;
 		for (auto curr = start; curr != end; curr++)
+		{
+			szCompareCount++;
 			if (*curr > *(curr+1))
 			{
 				std::swap(*curr, *(curr+1));
 				bSwapped = true;
+				szMoveCount++;
 			}
+		}
 	}
+	return vec;
 }
 
-
-template<class Type>
-void CocktailSort(Type& vec)
+template<class arr>
+arr CocktailSort(arr array, size_t& szCompareCount, size_t& szMoveCount)
 {
 	bool bSwapped = true;
-	int start = 0;
-	int end = vec.size() - 1;
+	int iStart = 0;
+	int iEnd = array.size() - 1;
 
 	while (bSwapped)
 	{
 		bSwapped = false;
-		for (int i = start; i < end; ++i)
-			if (vec[i] > vec[i+1])
+
+		for (int i = iStart; i < iEnd; ++i)
+		{
+			szCompareCount++;
+			if (array[i] > array[i + 1])
 			{
-				std::swap(vec[i], vec[i+1]);
+				szMoveCount++;
+				std::swap(array[i], array[i + 1]);
 				bSwapped = true;
 			}
-		if (!bSwapped) return;
+		}
+
+		if (!bSwapped) break;
+
 		bSwapped = false;
 
-		--end;
 
-		for (int i = end - 1; i >= start; --i)
-			if (vec[i] > vec[i+1])
+		--iEnd;
+
+		for (int i = iEnd - 1; i >= iStart; --i)
+		{
+			szCompareCount++;
+			if (array[i] > array[i + 1])
 			{
-				std::swap(vec[i], vec[i+1]);
+				szMoveCount++;
+				std::swap(array[i], array[i + 1]);
 				bSwapped = true;
 			}
-		++start;
+		}
+		++iStart;
 	}
+	return array;
 }
+
+template<class arr>
+arr merge(arr& left, arr& right, size_t& szCompareCount, size_t& szMoveCount)
+{
+	arr result;
+	int i = 0, j = 0;
+
+	while (i < left.size() && j < right.size())
+	{
+		szCompareCount++;
+		if (left[i] <= right[j])
+		{
+			szMoveCount++;
+			result.push_back(left[i]);
+			i++;
+		}
+		else
+		{
+			szMoveCount++;
+			result.push_back(right[j]);
+			j++;
+		}
+	}
+
+	while (i < left.size())
+	{
+		szMoveCount++;
+		result.push_back(left[i]);
+		i++;
+	}
+
+	while (j < right.size())
+	{
+		szMoveCount++;
+		result.push_back(right[j]);
+		j++;
+	}
+
+	return result;
+}
+template<class arr>
+arr MergeSort(const arr& array, size_t& szCompareCount, size_t& szMoveCount)
+{
+	if (array.size() <= 1)
+		return array;
+
+	int mid = array.size() / 2;
+	arr left(array.begin(), array.begin() + mid);
+	arr right(array.begin() + mid, array.end());
+
+	left = MergeSort(left, szCompareCount, szMoveCount);
+	right = MergeSort(right, szCompareCount, szMoveCount);
+
+	return merge(left, right, szCompareCount, szMoveCount);
+}
+
