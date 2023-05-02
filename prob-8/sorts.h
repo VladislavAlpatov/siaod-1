@@ -125,6 +125,8 @@ arr MergeSort(const arr& array, size_t& szCompareCount, size_t& szMoveCount)
 	arr left(array.begin(), array.begin() + mid);
 	arr right(array.begin() + mid, array.end());
 
+	szMoveCount += array.size();
+
 	left = MergeSort(left, szCompareCount, szMoveCount);
 	right = MergeSort(right, szCompareCount, szMoveCount);
 

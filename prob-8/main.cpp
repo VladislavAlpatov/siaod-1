@@ -13,14 +13,14 @@ void TestSorts(const std::vector<int>& vec)
 
 	BubbleSort(vec, szCompareCount, szMoveCount);
 	auto end = std::chrono::high_resolution_clock::now();
-	printf("[%zu] Bubble sort, moves: %zu,comps: %zu, time: %fms\n", vec.size(), szMoveCount, szCompareCount, std::chrono::duration<double, std::milli>(end-oldTime).count());
+	printf("[%zu] Bubble sort, moves: %zu,comps: %zu, time: %fs\n", vec.size(), szMoveCount, szCompareCount, std::chrono::duration<double, std::milli>(end-oldTime).count() / 1000.f);
 	oldTime = std::chrono::high_resolution_clock::now();
 	szCompareCount = 0;
 	szMoveCount = 0;
 
 	CocktailSort(vec, szCompareCount, szMoveCount);
 	end = std::chrono::high_resolution_clock::now();
-	printf("[%zu] Cocktail sort, moves: %zu,comps: %zu, time: %fms\n", vec.size(), szMoveCount, szCompareCount, std::chrono::duration<double, std::milli>(end-oldTime).count());
+	printf("[%zu] Cocktail sort, moves: %zu,comps: %zu, time: %fs\n", vec.size(), szMoveCount, szCompareCount, std::chrono::duration<double, std::milli>(end-oldTime).count() / 1000.f);
 	oldTime = std::chrono::high_resolution_clock::now();
 	szCompareCount = 0;
 	szMoveCount = 0;
@@ -28,12 +28,12 @@ void TestSorts(const std::vector<int>& vec)
 
 	MergeSort(vec, szCompareCount, szMoveCount);
 	end = std::chrono::high_resolution_clock::now();
-	printf("[%zu] Merge sort, moves: %zu,comps: %zu, time: %fms\n", vec.size(), szMoveCount, szCompareCount, std::chrono::duration<double, std::milli>(end-oldTime).count());
+	printf("[%zu] Merge sort, moves: %zu,comps: %zu, time: %fs\n", vec.size(), szMoveCount, szCompareCount, std::chrono::duration<double, std::milli>(end-oldTime).count() / 1000.f);
 }
 
 int main()
 {
-	for (const auto& szArrLen : std::vector<int>{20000, 40'000, 60'000, 80'000, 100'000})
+	for (const auto& szArrLen : std::vector<int>{20'000, 40'000, 60'000, 80'000, 100'000})
 	{
 		auto unOrderedArray = GenerateArray(szArrLen);
 
