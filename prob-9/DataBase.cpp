@@ -57,9 +57,7 @@ void DataBase::RandomSet(size_t szCount)
 {
 	srand(time(nullptr));
 	m_fFile.close();
-
-	std::ofstream(m_sFileName).close();
-
+	m_vecData.clear();
 	m_fFile = std::fstream(m_sFileName, std::ios::binary | std::ios::in | std::ios::out | std::ios::trunc);
 
 
