@@ -15,72 +15,56 @@ class Node
 public:
 	Node(uint64_t phone, const std::string& sName, const std::string& sOperatorNumber);
 	Node() = default;
+
+public:
+	void SetName(const std::string& sName)
+	{
+		memset(m_sName,0, 64);
+		strcpy(m_sName, sName.c_str());
+	}
+	void SetOperatorName(const std::string& sName)
+	{
+		memset(m_sOperatorName,0, 64);
+		strcpy(m_sOperatorName, sName.c_str());
+	}
+
 	uint64_t m_u64PhoneNumber{};
-	std::string m_sName;
-	std::string m_sOperatorName;
+	char m_sName[64];
+	char m_sOperatorName[64];
 };
 
 class DataBaseIterator
 {
 public:
-	DataBaseIterator(size_t mSzStartOffset, std::fstream* mFileHandle)
+	DataBaseIterator(size_t mSzStartOffset, uint64_t u64PhoneNumber)
 	{
 		m_szStartOffset  = mSzStartOffset;
-		m_fileHandle     = mFileHandle;
+		m_u64PhoneNumber     = u64PhoneNumber;
 	}
-
+	bool operator<(const DataBaseIterator& other) const
+	{
+		return m_u64PhoneNumber < other.m_u64PhoneNumber;
+	}
+	bool operator>(const DataBaseIterator& other) const
+	{
+		return m_u64PhoneNumber > other.m_u64PhoneNumber;
+	}
+	bool operator<=(const DataBaseIterator& other) const
+	{
+		return m_u64PhoneNumber <= other.m_u64PhoneNumber;
+	}
+	bool operator>=(const DataBaseIterator& other) const
+	{
+		return m_u64PhoneNumber >= other.m_u64PhoneNumber;
+	}
+	bool operator==(const DataBaseIterator& other) const
+	{
+		return m_u64PhoneNumber == other.m_u64PhoneNumber;
+	}
 	DataBaseIterator() = default;
 
 	uint64_t     m_u64PhoneNumber;
 	size_t       m_szStartOffset;
-	std::fstream* m_fileHandle;
-
-	DataBaseIterator operator++(int other)
-	{
-		m_fileHandle->seekg(m_szStartOffset);
-
-		m_fileHandle->read((char*)&m_u64PhoneNumber, sizeof(m_u64PhoneNumber));
-		int iNullTerms = 0;
-
-		char tmp = 0;
-		size_t szNameAndNameOfOperator = 0;
-		while (iNullTerms != 2)
-		{
-			m_fileHandle->read(&tmp, 1);
-			(tmp) ? szNameAndNameOfOperator++ : iNullTerms++;
-		}
-		m_szStartOffset += szNameAndNameOfOperator + sizeof(uint64_t) + iNullTerms;
-
-		return *this;
-	}
-	Node operator*()
-	{
-		Node out;
-
-		m_fileHandle->seekg(m_szStartOffset);
-		m_fileHandle->read(reinterpret_cast<char*>(&out.m_u64PhoneNumber), sizeof(uint64_t));
-
-		char chr = 1;
-
-		while (true)
-		{
-			char chr = 1;
-			m_fileHandle->read(&chr, 1);
-
-			if (chr) out.m_sName += chr; else break;
-
-		}
-
-		while (true)
-		{
-			char chr = 1;
-			m_fileHandle->read(&chr, 1);
-
-			if (chr) out.m_sOperatorName += chr; else break;
-
-		}
-		return out;
-	}
 };
 
 class DataBase
@@ -88,11 +72,15 @@ class DataBase
 public:
 	DataBase(const std::string& sFileName);
 
-	static DataBase LoadFromFile(const std::string& sFileName);
 	void Add(const Node& val);
-	Node& LinearSearchByPhoneNumber(uint64_t u64PhoneNumber);
-private:
-	std::vector<DataBaseIterator> m_vecData;
+	Node LinearSearchByPhoneNumber(uint64_t u64PhoneNumber);
+	Node BinarySearch(uint64_t u64PhoneNumber);
+	Node GetByDBIterator(const DataBaseIterator& iterator);
 
+	void RandomSet(size_t szCount);
+	std::vector<DataBaseIterator> m_vecData;
+private:
+	std::fstream m_fFile;
+	std::string m_sFileName;
 	DataBase() = default;
 };
