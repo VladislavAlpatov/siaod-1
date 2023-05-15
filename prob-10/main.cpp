@@ -1,57 +1,65 @@
 #include <iostream>
-#include <vector>
-#include <string>
+#include "searches/LinearSearch.h"
+#include "searches/KMPSearch.h"
+#include <iostream>
+#include "utils/utils.h"
 
-std::vector<size_t> computeLPS(const std::string& pattern)
+void Task1()
 {
-	std::vector<size_t> lps(pattern.length());
-	size_t szLen = 0;
-
-	for (size_t i = 1; i < pattern.length(); )
+	std::string text;
+	while (true)
 	{
-		if (pattern[i] == pattern[szLen])
+		int iOption;
+		printf("1 - Generate text\n2 - Linear search\n3 - KMP search\nChoose operation: ");
+		std::cin >> iOption;
+
+		if (iOption == 1)
 		{
-			lps[i++] = ++szLen;
-			continue;
+			size_t szTextSize;
+			printf("Enter text size: ");
+			std::cin >> szTextSize;
+			text = utils::GenerateRandomString(szTextSize);
+			printf("Done!\n");
 		}
-		(szLen != 0) ? szLen = lps[szLen - 1] : lps[i++] = 0;
+		else if (iOption == 2)
+		{
+			size_t szComps = 0;
+			std::string subst;
+			printf("Enter text to search: ");
+			std::cin >> subst;
+			const auto res = LinearSearch(text, subst,szComps);
 
+			if (res.empty())
+			{
+				printf("Not found\n");
+				continue;
+			}
+
+			printf("Found pattern at index %u, compares %u\n", res.back(), szComps);
+		}
+		else if (iOption == 3)
+		{
+			size_t szComps = 0;
+			std::string subst;
+			printf("Enter text to search: ");
+			std::cin >> subst;
+			const auto res = KMPSearch(text, subst, szComps);
+
+			if (res.empty())
+			{
+				printf("Not found\n");
+				continue;
+			}
+			printf("Found pattern at index %u, compares %u\n", res.back(), szComps);
+
+		}
 	}
-	return lps;
 }
-
-void KMP(const std::string& text, const std::string& pattern)
+void Task2()
 {
-	auto lps = computeLPS(pattern);
 
-
-	size_t i = 0;
-	size_t j = 0;
-
-	while (i < text.length())
-	{
-		if (text[i] == pattern[j])
-		{
-			i++;
-			j++;
-		}
-		if (j == pattern.length())
-		{
-			std::cout << "Pattern found at index " << i - j << '\n';
-			j = lps[j - 1];
-		}
-		else if (i < text.length() and text[i] != pattern[j])
-		{
-			(j > 0) ? j = lps[j - 1] : i++;
-		}
-	}
 }
-
-int main() {
-	std::string text = "ABABDABACDABABCABABABABCABAB";
-	std::string pattern = "ABABCABAB";
-
-	KMP(text, pattern);
-
-	return 0;
+int main()
+{
+	Task1();
 }

@@ -22,7 +22,7 @@ std::vector<size_t> CalculateLPS(const std::string& sPattern)
 	return lps;
 }
 
-std::vector<size_t> KMPSearch(const std::string& sText, const std::string& sPattern)
+std::vector<size_t> KMPSearch(const std::string& sText, const std::string& sPattern, size_t& szCompareCount)
 {
 	const auto lps = CalculateLPS(sPattern);
 
@@ -33,6 +33,7 @@ std::vector<size_t> KMPSearch(const std::string& sText, const std::string& sPatt
 
 	while (i < sText.length())
 	{
+		szCompareCount++;
 		if (sText[i] == sPattern[j])
 		{
 			i++;
@@ -45,7 +46,11 @@ std::vector<size_t> KMPSearch(const std::string& sText, const std::string& sPatt
 		}
 		else if (i < sText.length() and sText[i] != sPattern[j])
 		{
+			szCompareCount++;
 			(j > 0) ? j = lps[j - 1] : i++;
 		}
+		else
+			szCompareCount++;
 	}
+	return vecResults;
 }

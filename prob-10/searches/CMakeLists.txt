@@ -1,1 +1,1 @@
-target_sources(prob-9 PRIVATE KMPSearch.cpp LinearSearch.cpp)
+target_sources(prob-10 PRIVATE KMPSearch.cpp LinearSearch.cpp)

@@ -7,4 +7,4 @@
 #include <string>
 
 
-std::vector<size_t> LinearSearch(const std::string& sText, const std::string& sPattern);
+std::vector<size_t> LinearSearch(const std::string& sText, const std::string& sPattern, size_t& szCompareCount);

@@ -3,7 +3,7 @@
 //
 #include "LinearSearch.h"
 
-std::vector<size_t> LinearSearch(const std::string& sText, const std::string& sPattern)
+std::vector<size_t> LinearSearch(const std::string& sText, const std::string& sPattern, size_t& szCompareCount)
 {
 	std::vector<size_t> res;
 
@@ -13,7 +13,8 @@ std::vector<size_t> LinearSearch(const std::string& sText, const std::string& sP
 
 		for (uintptr_t j = 0; j < sPattern.size(); j++)
 		{
-			found = sPattern[j] == '\?' or sPattern[j] == sText[i+j];
+			found = sPattern[j] == sText[i+j];
+			szCompareCount++;
 			if (not found) break;
 		}
 		if (found)
