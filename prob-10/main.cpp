@@ -1,9 +1,9 @@
 #include <iostream>
 #include "searches/LinearSearch.h"
 #include "searches/KMPSearch.h"
-#include <iostream>
 #include "utils/utils.h"
 #include <chrono>
+#include <regex>
 
 void Task1()
 {
@@ -64,9 +64,21 @@ void Task1()
 }
 void Task2()
 {
+	std::string text;
+	printf("Enter some dates: ");
+	std::getline(std::cin, text);
+
+	std::regex pattern("(\\d{1,2})/(\\d{1,2})/(\\d{2})");
+	std::string result = std::regex_replace(text, pattern, "$2.$1.$3");
+	std::cout << result << '\n';
 
 }
+
 int main()
 {
-	Task1();
+	std::string iMode;
+	printf("1 - Pattern finding\n2 - Regex data convention\nChoose option: ");
+	std::getline(std::cin, iMode);
+
+	iMode == "1" ? Task1() : Task2();
 }

@@ -9,9 +9,9 @@ std::string utils::GenerateRandomString(size_t szLength)
 	if (!szLength) return "";
 
 	const std::string symbols = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_";
-	std::random_device rd;     // Only used once to initialise (seed) engine
-	std::mt19937 rng(rd());    // Random-number engine used (Mersenne-Twister in this case)
-	std::uniform_int_distribution<size_t> uni(0,symbols.size()-1); // Guaranteed unbiased
+	std::random_device rd;
+	std::mt19937 rng(rd());
+	std::uniform_int_distribution<size_t> uni(0,symbols.size()-1);
 
 	std::string outStr;
 
