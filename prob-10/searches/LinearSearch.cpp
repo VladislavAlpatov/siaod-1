@@ -13,9 +13,8 @@ std::vector<size_t> LinearSearch(const std::string& sText, const std::string& sP
 
 		for (uintptr_t j = 0; j < sPattern.size(); j++)
 		{
-			found = sPattern[j] == sText[i+j];
+			found &= sPattern[j] == sText[i+j];
 			szCompareCount++;
-			if (not found) break;
 		}
 		if (found)
 			res.push_back(i);
